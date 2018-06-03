@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nodejs:
+    build: ./base-images/nodejs
+  api:
+    image: tutorial_docker_windows_nodejs
+    volumes:
+      - ../api:/src
+    working_dir: /src
+    environment:
+      - PORT=3002
+      - NODE_ENV=development
+    ports:
+      - 3002:3002
+      - 9229:9229
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/bash
+  app:
+    image: tutorial_docker_windows_nodejs
+    volumes:
+      - ../app:/src
+    working_dir: /src
+    environment:
+      - PORT=3001
+      - HOST=app
+      - NODE_ENV=development
+    ports:
+      - 3001:3001
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/bash
